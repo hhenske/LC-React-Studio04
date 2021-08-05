@@ -16,7 +16,7 @@ function App() {
     // TODO: Inside each of the following handlers, update the corresponding numbers property from state.
     const handleUpdateSteps = (amount) => {
         // You can use your setter to update the state variable directly with the new amount.
-        
+        setNumbers;
     };
     const handleUpdateWater = (amount) => {
         // You can use your setter to update the state variable directly with the new amount.
@@ -87,7 +87,7 @@ function App() {
             
             {/* TODO: Pass the current type into the Details component */}
             {/* TODO: Pass the four update handler functions to the Details component below. Check the propTypes object at the bottom of Details.js to get the prop names, then look just below the state variables in this file to get the names of the handler functions. */}
-            <Details type = {tab} />
+            <Details type = {tab} value = {propTypes.updateSteps.amount} />
             
         </div>
     );

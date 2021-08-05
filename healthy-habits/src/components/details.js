@@ -27,7 +27,7 @@ const Details = (props) => {
         e.preventDefault();
         let amount = Number(e.target.value);
         // TODO: set the new value in state
-        
+        setStepsInput(e)
         // TODO: call the update handler via props and pass in the amount
         
     }
@@ -214,7 +214,7 @@ const Details = (props) => {
 // This provides validation of data types for all props
 Details.propTypes = {
     type: PropTypes.string.isRequired,
-    updateSteps: PropTypes.func.isRequired,
+    updateSteps: PropTypes.updateSteps.amount,
     updateWater: PropTypes.func.isRequired,
     updateFood: PropTypes.func.isRequired,
     updateExercise: PropTypes.func.isRequired,
