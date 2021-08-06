@@ -20,7 +20,10 @@ const Details = (props) => {
 
     // TODO: Create state variables to hold full lists of food and exercise
     // Initialize them as empty arrays.
-
+    const updateSteps = [];
+    const updateWater = [];
+    const updateFood = [];
+    const updateExercise = [];
 
     // Steps input handler (note e = event)
     const handleStepsChange = e => {
