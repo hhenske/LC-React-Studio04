@@ -9,41 +9,38 @@ const Details = (props) => {
     // Initialize them as empty strings.
     // Don't forget to import the hook you need.
     //const [numbers, setNumbers] = useState({steps:0, water:0, food:0, exercise:0, net:0});
-    const [stepsInput, setStepInput] = useState('');
+    const [stepsInput, setStepsInput] = useState('');
     const [waterInput, setWaterInput] = useState('');
     const [foodInput, setFoodInput] = useState('');
     const [foodCalorieInput, setfoodCalorieInput] = useState('');
     const [exerciseInput, setExerciseInput] = useState('');
     const [exerciseCalorieInput, setExerciseCalorieInput] = useState('');
     
-
-
     // TODO: Create state variables to hold full lists of food and exercise
     // Initialize them as empty arrays.
-    const updateSteps = [];
-    const updateWater = [];
-    const updateFood = [];
-    const updateExercise = [];
+    const [foodlist, setFoodlist] = useState([]);
+    const [exerciseList, setExerciseList] = useState([]);
+
 
     // Steps input handler (note e = event)
     const handleStepsChange = e => {
         e.preventDefault();
         let amount = Number(e.target.value);
         // TODO: set the new value in state
-        setStepInput(stepsInput)
+        setStepsInput(amount);
         // TODO: call the update handler via props and pass in the amount
-        
-    }
+        props.updateSteps(amount);
+    };
 
     // Water input handler
     const handleWaterChange = e => {
         e.preventDefault();
         let amount = Number(e.target.value);
         // TODO: set the new value in state
-        
+        setWaterInput(amount);
         // TODO: call the update handler via props and pass in the amount
-        
-    }
+        props.updateWater(amount);
+    };
 
     // Food input handlers
     const handleFoodDescChange = e => {

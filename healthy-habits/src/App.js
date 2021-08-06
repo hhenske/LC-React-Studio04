@@ -17,12 +17,15 @@ function App() {
     const handleUpdateSteps = (amount) => {
         // You can use your setter to update the state variable directly with the new amount.
         setNumbers((prevState) => {
-            return { ...prevState,steps: amount }
+            return { ...prevState, steps: amount, }
         });
     };
+
     const handleUpdateWater = (amount) => {
         // You can use your setter to update the state variable directly with the new amount.
-
+        setNumbers((prevState)=> {
+            return { ...prevState, steps: amount }
+        });
     };
     const handleUpdateFood = (amount) => {
         // You'll need to update both the food calories and the net calories here (add calories consumed). Use prevState to ensure you are adding the new amount to the existing total.
