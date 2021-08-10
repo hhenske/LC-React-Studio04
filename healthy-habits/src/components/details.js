@@ -12,13 +12,13 @@ const Details = (props) => {
     const [stepsInput, setStepsInput] = useState('');
     const [waterInput, setWaterInput] = useState('');
     const [foodInput, setFoodInput] = useState('');
-    const [foodCalorieInput, setfoodCalorieInput] = useState('');
+    const [foodCalorieInput, setFoodCalorieInput] = useState('');
     const [exerciseInput, setExerciseInput] = useState('');
     const [exerciseCalorieInput, setExerciseCalorieInput] = useState('');
     
     // TODO: Create state variables to hold full lists of food and exercise
     // Initialize them as empty arrays.
-    const [foodlist, setFoodlist] = useState([]);
+    const [foodList, setFoodList] = useState([]);
     const [exerciseList, setExerciseList] = useState([]);
 
 
@@ -30,6 +30,7 @@ const Details = (props) => {
         setStepsInput(amount);
         // TODO: call the update handler via props and pass in the amount
         props.updateSteps(amount);
+        setStepsInput('');
     };
 
     // Water input handler
@@ -40,6 +41,7 @@ const Details = (props) => {
         setWaterInput(amount);
         // TODO: call the update handler via props and pass in the amount
         props.updateWater(amount);
+        setWaterInput('');
     };
 
     // Food input handlers
@@ -47,12 +49,14 @@ const Details = (props) => {
         e.preventDefault();
         let desc = e.target.value;
         // TODO: set the new value in state
+        setFoodInput(desc);
         
     }
     const handleFoodCalChange = e => {
         e.preventDefault();
         let amount = Number(e.target.value);
         // TODO: set the new value in state
+        setFoodInput(amount);
         
     }
     const handleSubmitFood = e => {
@@ -60,14 +64,18 @@ const Details = (props) => {
         let newFoodEntry = {
             id: uuid(),
             // TODO: Add desc & cal properties with values from state
-            
+            desc: foodInput,
+            cal: foodCalorieInput, //**why is this comma here? */            
         }
         // TODO: use prevState to add the new entry to the food list (once you've created it later)
-        
+        //Instructions are different here and on solution.
+        let prevFoodList = [...foodList];
+        setFoodList([...prevFoodList, newFoodEntry]);
         // TODO: call the update handler via props and pass in the calories
-        
+        props.updateFood(newFoodEntry.cal);
         // TODO: reset the food desc and cal input values to an empty string
-        
+        setFoodInput('');
+        setFoodCalorieInput('');
     }
 
     // Exercise input handlers
@@ -75,12 +83,15 @@ const Details = (props) => {
         e.preventDefault();
         let desc = e.target.value;
         // TODO: set the new value in state
+        setExerciseInput(desc);
+        
         
     }
     const handleExerciseCalChange = e => {
         e.preventDefault();
         let amount = Number(e.target.value);
         // TODO: set the new value in state
+        setExerciseCalorieInput(amount);
         
     }
     const handleSubmitExercise = e => {
@@ -88,13 +99,17 @@ const Details = (props) => {
         let newExerciseEntry = {
             id: uuid(),
             // TODO: Add desc & cal properties with values from state
-            
+            desc: exerciseInput,
+            cal: exerciseCalorieInput,
         }
         // TODO: use prevState to add the new entry to the exercise list (once you've created it later)
-        
+        let prevExerciseList = [...exerciseList];
+        setExerciseList([...prevExerciseList, newExerciseEntry]);
         // TODO: call the update handler via props and pass in the calories from newExerciseEntry
-        
+        props.updateExercise(newExerciseEntry.cal);
         // TODO: reset the exercise desc and cal input values to an empty string
+        setExerciseInput('');
+        setExerciseCalorieInput('');
         
     }
 
@@ -177,8 +192,8 @@ const Details = (props) => {
                 <form id="food-form">
                     <p className="label">ADD CALORIES CONSUMED</p>
                     {/* TODO: Add two-way binding for each of the two inputs below */}
-                    <input type="text" onChange = {handleFoodDescChange} className="wide" placeholder="Description of food or beverage" maxLength="32" value = {foodInput} />
-                    <input type="number" onChange = {handleFoodCalChange} placeholder="Calories" min="0" value = {foodCalorieInput} />
+                    <input type="text" className="wide" placeholder="Description of food or beverage" value = {foodInput} onChange = {handleFoodDescChange} maxLength="32" />
+                    <input type="number" placeholder="Calories" min="0" value = {foodCalorieInput} onChange = {handleFoodCalChange} />
                     {/* TODO: BONUS! Make the button disabled if either field is empty */}
                     <button type="submit" onClick={handleSubmitFood}>Add</button>
                 </form>
@@ -186,7 +201,7 @@ const Details = (props) => {
                 <div>
                     <p className="details-header">FOOD & BEVERAGE LOG</p>
                     {/* TODO: Add the DetailsTable component and pass in the food list using the attribute 'list' */}
-                    
+                    <DetailsTable list = {foodList} />
                 </div>
             </div>}
 
@@ -194,7 +209,7 @@ const Details = (props) => {
                 <form id="exercise-form">
                     <p className="label">ADD CALORIES BURNED</p>
                     {/* TODO: Add two-way binding for each of the two inputs below */}
-                    <input type="text" onCHange = {handleExerciseDescChange} className="wide" placeholder="Description of exercise activity" maxLength="32" value = {exerciseInput} />
+                    <input type="text" onChange = {handleExerciseDescChange} className="wide" placeholder="Description of exercise activity" maxLength="32" value = {exerciseInput} />
                     <input type="number" onChange = {handleExerciseCalChange} placeholder="Calories" min="0" value = {exerciseCalorieInput} />
                     {/* TODO: BONUS! Make the button disabled if either field is empty */}
                     <button type="submit" onClick={handleSubmitExercise}>Update</button>
@@ -203,7 +218,7 @@ const Details = (props) => {
                 <div>
                     <p className="details-header">EXERCISE LOG</p>
                     {/* TODO: Add the DetailsTable component and pass in the exercise list using the attribute 'list' */}
-                    
+                    <DetailsTable list = {exerciseList} />
                 </div>
             </div>}
 
@@ -214,7 +229,7 @@ const Details = (props) => {
 // This provides validation of data types for all props
 Details.propTypes = {
     type: PropTypes.string.isRequired,
-    updateSteps: PropTypes.string.isRequired,
+    updateSteps: PropTypes.func.isRequired,
     updateWater: PropTypes.func.isRequired,
     updateFood: PropTypes.func.isRequired,
     updateExercise: PropTypes.func.isRequired,
